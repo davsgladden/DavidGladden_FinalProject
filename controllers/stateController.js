@@ -61,11 +61,18 @@ const createNewFunFact = async (req, res) => {
 //Get a funfact
 const getFunFact = async (req, res) => {
     const result = await getData(req, res);
-    const randomFact = result[0].funfacts[Math.floor(Math.random() * result[0].funfacts.length)];
-    let funFactRes = {
-        "funfact": randomFact
+    const input = req?.params?.state.toUpperCase();
+    if (!input || input.length !== 2) {
+        return res.status(400).json({ message: "State Abbreviation is required and must be 2 characters." });
     }
-    res.json(funFactRes);
+    if (!result[0].funfacts) {
+        return res.status(400).json({ message: `No Fun Fact found at that index for ${input}` });
+    }
+        const randomFact = result[0].funfacts[Math.floor(Math.random() * result[0].funfacts.length)];
+        let funFactRes = {
+            "funfact": randomFact
+        }
+        res.json(funFactRes);
 
 };
 
