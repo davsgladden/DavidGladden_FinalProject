@@ -1,8 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const cors = require("cors");
-const corsOptions = require("./config/corsOptions");
 const path = require("path");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
@@ -15,7 +13,7 @@ connectDB();
 
 //custom middleware logger
 app.use(logger);
-app.use(cors(corsOptions));
+
 //Builtin middleware
 app.use(express.urlencoded({ extended: false })); //Used to handel urlencoded data
 app.use(express.json()); //parses incoming requests with JSON payloads.
