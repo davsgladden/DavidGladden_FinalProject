@@ -656,3 +656,6 @@
 20220511	23:03:04 	 b49a6023-b31f-4795-b949-55ef40a3e635 	 GET 	 undefined 	/states/ak/
 20220511	23:10:32 	 c6370dea-86a7-422d-9d53-3cb28d0a5a89 	 GET 	 undefined 	/states/ak/funfact
 20220511	23:12:07 	 e8e2f64d-1ddc-4748-9d7b-45d5db47cea3 	 GET 	 undefined 	/states/ak/funfact
+20220511	23:21:56 	 6ebd7496-9aa1-41f9-b66b-c9f88a56c348 	 GET 	 undefined 	/states/AR/funfact
+20220511	23:22:00 	 1f329a3f-3794-425b-9613-4c81b2609c8d 	 POST 	 undefined 	/states/AR/funfact
+20220511	23:22:07 	 48b72f4b-baf7-4fc3-9c9b-c354cbc13626 	 POST 	 undefined 	/states/AR/funfact

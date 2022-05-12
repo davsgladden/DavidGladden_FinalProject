@@ -52,7 +52,8 @@ const createNewFunFact = async (req, res) => {
             {
                 $push: { funfacts: req.body.funfacts },
             }, { upsert: true });
-    res.status(201).json(result);
+    const mongoResult = await State.findOne({ stateCode: input }).exec();
+        res.status(201).json(mongoResult);
   } catch (error) {
     console.log(error);
   }
@@ -79,7 +80,7 @@ const getFunFact = async (req, res) => {
 //update a funfact
 const updateFunFact = async (req, res) => {
     if (req?.body?.index <1 || !req?.body.index || !req.body.funfact) {
-        return res.status(400).json({ message: "Index and funfacts parameters are required and index should be greater than 0. " });
+        return res.status(400).json({ message: "index and funfact parameters are required and index should be greater than 0. " });
     }
     const input = req?.params?.state.toUpperCase();
     if (!input || input.length !== 2) {
