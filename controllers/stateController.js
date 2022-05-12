@@ -1,13 +1,6 @@
-// const data = {
-//   employees: require("../model/employees.json"),
-//   setEmployees: (data) => {
-//     this.employees = data;
-//   },
-// };
 
 const State = require("../model/State");
 const stateJson = require("../model/states.json");
-//const stateData = require("./middleware/stateData");
 
 //Get all States
 const getStates = async (req, res) => {
@@ -32,7 +25,6 @@ const getStates = async (req, res) => {
     } else {
         res.json(states);
     }
-    console.log(req.query);
 };
 
 
@@ -46,7 +38,7 @@ const createNewFunFact = async (req, res) => {
         return res.status(400).json({ message: "funfacts value is required" });
   }
     try {
-        const result = await State.updateOne({
+        await State.updateOne({
             stateCode: input
         },
             {
@@ -88,7 +80,6 @@ const updateFunFact = async (req, res) => {
     }
     const index = req?.body?.index-1;
     const mongoResult = await State.findOne({ stateCode: input }).exec();
-    //console.log(mongoResult);
     if (index > mongoResult.funfacts.length) {
         return res.status(400).json({ message: `No Fun Fact found at that index for ${input}` });
     } else {
@@ -101,7 +92,6 @@ const updateFunFact = async (req, res) => {
                     $set: { funfacts: mongoResult.funfacts },
                 });
             res.status(201).json(mongoResult);
-            //console.log(result);
         } catch (error) {
             console.log(error);
         }
@@ -126,7 +116,6 @@ const deleteFunFact = async (req, res) => {
     } else {
         try {
             mongoResult.funfacts.splice(index, 1);
-            //console.log(mongoResult);
             await State.updateOne({
                 stateCode: input
             },
@@ -191,7 +180,7 @@ const getStateAdmission = async (req, res) => {
 };
 
 
-//Function
+//Function to get state data
 const getData = async (req, res) => {
     const states = await stateJson;
     const input = req?.params?.state.toUpperCase();
@@ -200,7 +189,6 @@ const getData = async (req, res) => {
     }
 
     var keys = ["code"];
-    //var values = Array(input.toUpperCase());
     var result = states.filter(function (e) {
         return keys.every(function (a) {
             return input.includes(e[a])
@@ -213,17 +201,13 @@ const getData = async (req, res) => {
             .json({ message: "No State matches State Abbreviation" });
 
     }
-    //console.log(result);
     const mongoResult = await State.findOne({ stateCode: input }).exec();
-    //console.log(mongoResult);
     if (mongoResult !== null) {
         let funFactRes =
             mongoResult.funfacts;
 
         result[0].funfacts = funFactRes;
-        //console.log(result);
         return result;
-        //return [].concat(result, funFactRes);
     } else
         return result;
 }
