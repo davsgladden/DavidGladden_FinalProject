@@ -34,15 +34,19 @@ const createNewFunFact = async (req, res) => {
     if (!input || input.length != 2) {
         return res.status(400).json({ message: "State Abbreviation is required and must be 2 characters." });
     }
-    if (!req?.body.funfacts) {
+    if (!req?.body?.funfacts) {
         return res.status(400).json({ message: "funfacts value is required" });
-  }
+    }
+    if (!Array.isArray(req?.body?.funfacts)) {
+        return res.status(400).json({ message: "funfacts value must be an array" });
+    }
     try {
         await State.updateOne({
             stateCode: input
         },
             {
-                $push: { funfacts: req.body.funfacts },
+                $addToSet: {
+                    funfacts: { $each: req.body.funfacts}},
             }, { upsert: true });
     const mongoResult = await State.findOne({ stateCode: input }).exec();
         res.status(201).json(mongoResult);
